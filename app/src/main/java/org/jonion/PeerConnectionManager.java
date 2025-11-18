@@ -39,6 +39,7 @@ public class PeerConnectionManager {
         DH.generatePublicKey();
         logger.info("DH public key is generated");
 
+        /**\/ TODO: analisaar melhor as funcionalidades abaixo; */
         // new Thread(this::listenForConnections).start();
         // new Thread(this::listenForInputFromKeyboard).start();
 
@@ -62,6 +63,18 @@ public class PeerConnectionManager {
         String peerId = peerConnection.getIp();
         activePeerConnections.putIfAbsent(peerId, peerConnection);
         logger.info("Added active peer connection: {}", peerConnection.getIp());
+    }
+
+    public void addServers(HashMap<String, Integer> servers){
+        try{
+            for (String ip : servers.keySet()) {
+                PeerConnection peerConnection = new PeerConnection(new Socket(ip, servers.get(ip)), this);
+                String peerId = peerConnection.getIp();
+                activePeerConnections.putIfAbsent(peerId, peerConnection);
+            }
+        }catch (IOException e) {
+
+        }
     }
 
     private void removePeerConnection(String peerId) {
