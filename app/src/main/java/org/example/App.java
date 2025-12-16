@@ -5,8 +5,10 @@ package org.example;
 import test.ProxyNetworkSetupTest;
 import test.client.ClientAPIExample;
 import test.receiver.ReceiverAPIExample;
+import test.RunAll;
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.lang.InterruptedException;
 
 public class App {
     public String getGreeting() {
@@ -20,11 +22,19 @@ public class App {
         // }catch(UnknownHostException e){
         //     System.out.println("cannot resolve a hostname to an IP address.");
         // }
-        new ProxyNetworkSetupTest().main(args);
 
         try{
-            new ClientAPIExample().main(args);
-            new ReceiverAPIExample().main(args);
-        }catch(IOException e){}
+        // RunAll run0 = new RunAll(0, args);
+        // run0.start();
+        // run0.join();
+
+        RunAll run1 = new RunAll(1, args);
+        run1.start();
+        run1.join();
+
+        RunAll run2 = new RunAll(2, args);
+        run2.start();
+        run2.join();
+        }catch(java.lang.InterruptedException e){}
     }
 }
