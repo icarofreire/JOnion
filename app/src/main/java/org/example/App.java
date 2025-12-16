@@ -3,6 +3,9 @@
  */
 package org.example;
 import test.ProxyNetworkSetupTest;
+import test.client.ClientAPIExample;
+import test.receiver.ReceiverAPIExample;
+import java.io.IOException;
 import java.net.UnknownHostException;
 
 public class App {
@@ -18,5 +21,10 @@ public class App {
         //     System.out.println("cannot resolve a hostname to an IP address.");
         // }
         new ProxyNetworkSetupTest().main(args);
+
+        try{
+            new ClientAPIExample().main(args);
+            new ReceiverAPIExample().main(args);
+        }catch(IOException e){}
     }
 }

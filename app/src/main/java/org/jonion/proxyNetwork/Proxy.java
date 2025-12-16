@@ -9,9 +9,6 @@ import java.security.cert.X509Certificate;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import java.security.cert.CertificateFactory;
-import java.io.FileInputStream;
-import java.security.cert.CertificateException;
 
 /**
  * The single node of proxy network.
@@ -46,22 +43,13 @@ public class Proxy {
 
         System.out.println("(Proxy Network's Proxy 1.0)");
 
-        generateKeyAndRegisterCertificate();
+        // generateKeyAndRegisterCertificate();
 
         // EVENT LOOP - Listen for each client
         this.proxyEventLoop = new ProxyEventLoop();
         this.proxyEventLoop.start(this);
 
 
-    }
-
-    public static X509Certificate getCertObject(String filePath) 
-    throws IOException, CertificateException {
-        try (FileInputStream is = new FileInputStream(filePath)) {
-            CertificateFactory certificateFactory = CertificateFactory
-            .getInstance("X.509");
-            return (X509Certificate) certificateFactory.generateCertificate(is);
-        }
     }
 
     private void generateKeyAndRegisterCertificate() throws IOException {
@@ -72,8 +60,11 @@ public class Proxy {
 
         this.localProxyKeystore = "myKeyStore" + myCounter;
         CryptoModule.createKeyStore(localProxyKeystore);
-        // try{
-        X509Certificate x509Certificate = null;//getCertObject(this.MY_IP+":"+this.MY_CERT+":"+this.MY_PASSWORD+":"+this.localProxyKeystore);//CryptoModule.generateAndStoreX509Certificate(
+        
+        /**\/ [FAZER] inserir certificação x509;
+         * fazer uso do wrapper Certificate.java;
+        */
+        X509Certificate x509Certificate = null;//CryptoModule.generateAndStoreX509Certificate(
         //         this.MY_IP,
         //         Proxy.MY_CERT,
         //         Proxy.MY_PASSWORD,
@@ -99,7 +90,6 @@ public class Proxy {
             }
 
         // }
-        // }catch(CertificateException e){}
 
     }
 
